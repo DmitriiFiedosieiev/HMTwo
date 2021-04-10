@@ -3,11 +3,15 @@ package com.hillel.stringWorker;
 import org.openjdk.jmh.annotations.*;
 import org.openjdk.jmh.infra.Blackhole;
 
+import java.io.BufferedReader;
 import java.io.FileInputStream;
+import java.io.FileReader;
 import java.io.IOException;
 import java.nio.file.Files;
 import java.nio.file.Path;
 import java.nio.file.Paths;
+import java.util.ArrayList;
+import java.util.List;
 import java.util.OptionalInt;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Stream;
@@ -30,9 +34,12 @@ public class MaxLength {
     @Benchmark
     public void findMaxLengthWithForEach(Blackhole blackhole) {
         int flag = 0;
-        try(FileInputStream input = new FileInputStream(filePath)) {
-            byte[] buffer = input.readAllBytes();
-            String[] lines = new String(buffer).split("\n");
+        try(BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
+
+            List<String> lines = new ArrayList<>();
+            do {
+                lines.add(bufferedReader.readLine());
+            } while (bufferedReader.readLine() != null);
             for (String line : lines) {
                 if (line.length() > flag) {
                     flag = line.length();
