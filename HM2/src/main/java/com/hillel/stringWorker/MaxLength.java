@@ -36,15 +36,13 @@ public class MaxLength {
         int flag = 0;
         try(BufferedReader bufferedReader = new BufferedReader(new FileReader(filePath))) {
 
-            List<String> lines = new ArrayList<>();
-            do {
-                lines.add(bufferedReader.readLine());
-            } while (bufferedReader.readLine() != null);
-            for (String line : lines) {
+			do {
+                String line = bufferedReader.readLine();
                 if (line.length() > flag) {
-                    flag = line.length();
+                flag = line.length();
                 }
-            }
+            } while (bufferedReader.readLine() != null);
+			
         } catch (IOException e) {
             e.printStackTrace();
         }
